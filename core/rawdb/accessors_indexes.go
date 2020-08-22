@@ -67,6 +67,7 @@ func WriteTxLookupEntries(db ethdb.KeyValueWriter, block *types.Block) {
 // WriteTxLookupEntriesByHash is identical to WriteTxLookupEntries, but does not
 // require a full types.Block as input.
 func WriteTxLookupEntriesByHash(db ethdb.KeyValueWriter, number uint64, hashes []common.Hash) {
+	log.Info("=== WriteTxLookupEntriesByHash", "number", number, "size", len(hashes));
 	numberBytes := new(big.Int).SetUint64(number).Bytes()
 	for _, hash := range hashes {
 		if err := db.Put(txLookupKey(hash), numberBytes); err != nil {

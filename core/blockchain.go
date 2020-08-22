@@ -2279,10 +2279,12 @@ func (bc *BlockChain) maintainTxIndex(ancients uint64) {
 		select {
 		case head := <-headCh:
 			if done == nil {
+				log.Info("=== blockchain.go", "indexing", "...");
 				done = make(chan struct{})
 				go indexBlocks(rawdb.ReadTxIndexTail(bc.db), head.Block.NumberU64(), done)
 			}
 		case <-done:
+			log.Info("=== blockchain.go", "done", "true");
 			done = nil
 		case <-bc.quit:
 			return
